@@ -13,23 +13,3 @@ if ($conn->connect_error) {
 }
 
 
-//data src name
-// $dsn = "mysql:host=localhost;dbname=phonebookapplication";
-// $dbusername = "root";
-// $dbpassword = "";
-
-
-// $conn = new mysqli($dsn, $dbusername, $dbpassword);
-
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
-
-// try {
-// $pdo = new PDO($dsn, $dbusername, $dbpassword ); //pdo = php data object
-// $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-// } catch (PDOException $e) {
-//     echo "Connection Failed: " . $e->getMessage();
-    
-// }

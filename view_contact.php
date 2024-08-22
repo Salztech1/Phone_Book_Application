@@ -26,14 +26,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $persons[$index]->number = $_POST['editPhoneNumber'];
         $persons[$index]->company = $_POST['editCompany'];
 
-        $_SESSION['persons'] = $persons;
+        // Update contact information in the database
+        $updateSql = "UPDATE contacts SET firstname = '{$persons[$index]->firstname}', lastname = '{$persons[$index]->lastname}', phonenumber = '{$persons[$index]->number}', company = '{$persons[$index]->company}' WHERE id = " . ($index + 1);
+        $conn->query($updateSql);
     }
 }
 
 if (isset($_GET['delete'])) {
     $index = $_GET['delete'];
+
+    // Delete contact from the database
+    $deleteSql = "DELETE FROM contacts WHERE id = " . ($index + 1);
+    $conn->query($deleteSql);
+
     unset($persons[$index]);
-    $_SESSION['persons'] = $persons;
 }
 
 $searchResults = $persons;
