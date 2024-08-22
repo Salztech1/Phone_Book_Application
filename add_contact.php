@@ -1,39 +1,41 @@
 <?php
 session_start();
 include 'classes/person.class.php';
+include 'dbh-inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['phoneNumber']) && isset($_POST['company']) && isset($_FILES['image'])) {
 
+
+    $firstname = $_POST['firstName'];
+    $lastname = $_POST['lastName'];
+    $number = $_POST['phoneNumber'];
+    $company = $_POST['company'];
+
     $target_dir = "Images/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); // To determine the file type
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); //determine the file
     
     // Check if image file is a valid image
     $check = getimagesize($_FILES["image"]["tmp_name"]);
-    
-    if ($check !== false) {
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-            $firstname = $_POST['firstName'];
-            $lastname = $_POST['lastName'];
-            $number = $_POST['phoneNumber'];
-            $company = $_POST['company'];
 
-            $person = new Person($firstname, $lastname, $number, $company, $target_file);
 
-            $persons = isset($_SESSION['persons']) ? $_SESSION['persons'] : [];
-            $persons[] = $person;
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        $sql = "INSERT INTO contacts (firstname, lastname, phonenumber, company, image) VALUES ('$firstname', '$lastname', '$number', '$company', '$target_file')";
 
-            $_SESSION['persons'] = $persons;
-
+        if ($conn->query($sql) === TRUE) {
             header("Location: view_contact.php");
             exit();
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Error: " . $sql . "<br>" . $conn->error;
         }
     } else {
-        echo "File is not an image.";
+        echo "Sorry, there was an error uploading your file.";
     }
+
+    $conn->close();
 }
+    
+
 ?>
 
 <!DOCTYPE html>

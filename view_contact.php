@@ -1,19 +1,30 @@
 <?php
-include 'classes/person.class.php';
 session_start();
+include 'classes/person.class.php';
+include 'dbh-inc.php';
 
-$persons = isset($_SESSION['persons']) ? $_SESSION['persons'] : [];
+
+// Fetch contacts from the database
+$sql = "SELECT * FROM contacts";
+$result = $conn->query($sql);
+
+$persons = []; // Initialize an empty array to store contact objects
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $person = new Person($row['firstname'], $row['lastname'], $row['phonenumber'], $row['company'], $row['image']);
+        $persons[] = $person;
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['editIndex'])) {
         $index = $_POST['editIndex'];
 
-
         $persons[$index]->firstname = $_POST['editFirstName'];
         $persons[$index]->lastname = $_POST['editLastName'];
         $persons[$index]->number = $_POST['editPhoneNumber'];
         $persons[$index]->company = $_POST['editCompany'];
-
 
         $_SESSION['persons'] = $persons;
     }
