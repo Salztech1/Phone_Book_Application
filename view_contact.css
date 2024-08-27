@@ -3,13 +3,14 @@
 }
 
 body {
-    color: black;
-    text-align: center;
+    background-color: #140D27;
+    color: white;
+    
    
 }
 
 h2 {
-    color: rgb(10, 184, 10);
+    color: #D434FE;
 
 }
 
@@ -42,7 +43,7 @@ button {
 }
 
 .add_button {
-    background-color:rgb(10, 184, 10) ;
+    background: linear-gradient(to left, #903AFF, #D434FE, #FF26B9, #FE34B9) ;
     text-decoration: none;
     border: none
 }
@@ -62,7 +63,7 @@ img {
 }
 
 span button {
-    background-color:rgb(10, 184, 10) ;
+    background: linear-gradient(to left, #903AFF, #D434FE, #FF26B9, #FE34B9) ;
     color: white;
     border: none;
 }

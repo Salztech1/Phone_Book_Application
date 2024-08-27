@@ -12,9 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
     $company = $_POST['company'];
 
     $target_dir = "Images/";
-    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $target_file = $target_dir . basename($_FILES["image"]["name"]); //basename is to retrive the basename of the uploaded file from the file arrey
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); //determine the file
-    
+
     // Check if image file is a valid image
     $check = getimagesize($_FILES["image"]["tmp_name"]);
 
@@ -31,10 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
-
+    //Database connection closes
     $conn->close();
 }
-    
-
-?>
-

@@ -9,6 +9,7 @@ $result = $conn->query($sql);
 
 $persons = []; // Initialize an empty array to store contact objects
 
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $person = new Person($row['id'], $row['firstname'], $row['lastname'], $row['phonenumber'], $row['company'], $row['image']);
