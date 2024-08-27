@@ -1,6 +1,5 @@
 <?php
 
-
 $host = 'localhost'; // or the IP address or hostname of your MySQL server
 $user = 'root'; // replace with your MySQL username
 $password = ''; // replace with your MySQL password

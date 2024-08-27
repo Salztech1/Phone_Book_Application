@@ -1,5 +1,7 @@
 <?php
 class Person {
+
+    //Properties
     private $id;
     private $firstName;
     private $lastName;
@@ -7,6 +9,7 @@ class Person {
     private $company;
     private $image;
 
+    //Method
     public function __construct($id, $firstName, $lastName, $number, $company, $image) {
         $this->id = $id;
         $this->firstName = $firstName;
@@ -15,7 +18,8 @@ class Person {
         $this->company = $company;
         $this->image = $image;
     }
-
+//Getter method allows you to retrieve the values of the private properties outside the class
+//Setter method allows you to update the values of the private properties from outside the class 
     public function getId() {
         return $this->id;
     }

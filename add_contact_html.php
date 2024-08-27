@@ -22,7 +22,7 @@ include 'add_contact.php';
         <label> Last Name:</label>
         <input type="text" required name="lastName" placeholder="Last Name"><br>
         <label>Phone No:</label>
-        <input type="text" required name="phoneNumber" placeholder="Phone Number"><br>
+        <input type="tel" required name="phoneNumber" placeholder="Phone Number"><br>
         <label>Company:</label>
         <input type="text" required name="company" placeholder="Company"><br>
         <label>Image</label>
