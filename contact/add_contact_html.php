@@ -16,7 +16,7 @@ include '../contact/add_contact.php';
     <h2>New Contact</h2>
     <form method="POST" enctype="multipart/form-data">
 
-        <label>First Name:</label>
+        <label  >First Name:</label>
         <input type="text" required name="firstName" placeholder="First Name"><br>
         <label> Last Name:</label>
         <input type="text" required name="lastName" placeholder="Last Name"><br>

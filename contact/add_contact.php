@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
     $company = $_POST['company'];
 
     // Set the target directory and file path
-    $target_dir =   "../Images" ;
+    $target_dir =   "../Images/" ;
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 

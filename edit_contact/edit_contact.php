@@ -1,17 +1,15 @@
 <?php
 include '../view_contact.php';
 
-
 // Define the function to update contact information
-function updateContactInfo()
+function updateContactInfo($editIndex, $newFirstName, $newLastName, $newNumber, $newCompany, $newImage)
 {
-
     include '../dbh-inc.php';
 
+    // Select all contacts from the database
     $sql = "SELECT * FROM contacts";
     $result = $conn->query($sql);
     $persons = []; // Initialize an empty array to store contact objects
-
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -24,14 +22,53 @@ function updateContactInfo()
         if (isset($_POST['editIndex'])) {
             $index = $_POST['editIndex'];
 
-            $persons[$index]->setFirstName($_POST['editFirstName']);
-            $persons[$index]->setLastName($_POST['editLastName']);
-            $persons[$index]->setNumber($_POST['editPhoneNumber']);
-            $persons[$index]->setCompany($_POST['editCompany']);
+            // Update the person's details
+            $persons[$index]->setFirstName($newFirstName);
+            $persons[$index]->setLastName($newLastName);
+            $persons[$index]->setNumber($newNumber);
+            $persons[$index]->setCompany($newCompany);
+
+            // Handle image upload
+            if (!empty($newImage)) {
+                $targetDir = "../Images/"; // Directory to store images
+                $targetFile = $targetDir . basename($_FILES["editImage"]["name"]);
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+                // Check if image file is a valid image
+                $check = getimagesize($_FILES["editImage"]["tmp_name"]);
+                if ($check === false) {
+                    echo "Error: File is not an image.";
+                    return;
+                }
+
+                // Check file size (e.g., max 2MB)
+                if ($_FILES["editImage"]["size"] > 2000000) {
+                    echo "Error: Image file is too large.";
+                    return;
+                }
+
+                // Allow certain file formats
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                    echo "Error: Only JPG, JPEG, PNG & GIF files are allowed.";
+                    return;
+                }
+
+                // Move the uploaded file to the target directory
+                if (move_uploaded_file($_FILES["editImage"]["tmp_name"], $targetFile)) {
+                    $persons[$index]->setImage($targetFile);
+                } else {
+                    echo "Error: There was an error uploading the image.";
+                    return;
+                }
+            }
 
             // Update the contact in the database
-            $sql = "UPDATE contacts SET firstname = '{$persons[$index]->getFirstName()}', lastname = '{$persons[$index]->getLastName()}', phonenumber = '{$persons[$index]->getNumber()}', company = '{$persons[$index]->getCompany()}' WHERE id = '{$persons[$index]->getId()}'";
-            $conn->query($sql);
+            $sql = "UPDATE contacts SET firstname = '{$persons[$index]->getFirstName()}', lastname = '{$persons[$index]->getLastName()}', phonenumber = '{$persons[$index]->getNumber()}', company = '{$persons[$index]->getCompany()}', image = '{$persons[$index]->getImage()}' WHERE id = '{$persons[$index]->getId()}'";
+            if ($conn->query($sql) === TRUE) {
+                echo "Contact updated successfully.";
+            } else {
+                echo "Error: " . $conn->error;
+            }
         }
     }
 }
@@ -64,7 +101,6 @@ if (isset($_GET['index'])) {
         $lastName = htmlspecialchars($contact->getLastName());
         $number = htmlspecialchars($contact->getNumber());
         $company = htmlspecialchars($contact->getCompany());
-        // Corrected variable assignment for the image URL
         $image = htmlspecialchars($contact->getImage());
     } else {
         // Handle invalid index
