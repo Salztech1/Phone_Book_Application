@@ -33,6 +33,10 @@ button {
 
 }
 
+.image{
+    border-radius: 50%;
+}
+
 
 button a {
     text-decoration: none;

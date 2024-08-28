@@ -5,6 +5,9 @@
 body {
     background-color: #140D27;
     color: white;
+    text-align: center;
+    border: 1px solid white;
+    box-shadow: 2px 2px 2px 2px  whitesmoke;
     
    
 }
@@ -50,7 +53,7 @@ button {
 
 p a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 span a {
