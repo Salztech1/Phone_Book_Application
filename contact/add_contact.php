@@ -11,8 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
     $number = $_POST['phoneNumber'];
     $company = $_POST['company'];
 
+    // Server-side validation for phone number: Check if it contains only digits
+    if (!preg_match('/^[+]?[0-9\s\-\(\)]+$/', $number)) {
+        // Use JavaScript alert to show the message and redirect back to the form
+        echo "<script>
+                alert('Invalid phone number. Please enter a valid phone number.');
+                window.location.href = 'add_contact_html.php'; // Replace with the actual URL of your form page
+              </script>";
+        exit();
+    }
+
     // Set the target directory and file path
-    $target_dir =   "../Images/" ;
+    $target_dir = "../Images/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -24,17 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
     }
 
     // Debugging: Check if directory exists and is writable
-    if (!is_dir($target_dir)) {
-        echo "Directory does not exist: $target_dir<br>";
-        exit();
-    }
+    // if (!is_dir($target_dir)) {
+    //     echo "Directory does not exist: $target_dir<br>";
+    //     exit();
+    // }
 
-    if (!is_writable($target_dir)) {
-        echo "Directory is not writable: $target_dir<br>";
-        exit();
-    }
+    // if (!is_writable($target_dir)) {
+    //     echo "Directory is not writable: $target_dir<br>";
+    //     exit();
+    // }
 
-    echo "Attempting to move file to: $target_file<br>";
+    //echo "Attempting to move file to: $target_file<br>";
 
     // Try to move the uploaded file
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -55,4 +65,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
     // Close the database connection
     $conn->close();
 }
-?>

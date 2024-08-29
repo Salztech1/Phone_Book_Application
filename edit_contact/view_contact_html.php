@@ -23,26 +23,40 @@ include '../view_contact.php';
     </form>
 
     <?php
-    foreach ($searchResults as $key => $person) {
-        if ($person) {
-            $imageURL = $person->getImage();
-            $personId = $person->getId();
-            echo '<div class="contact" style="display:flex;  text-align: center; justify-content: center;">';
-            if ($imageURL) {
-                echo '<p ><img src="' . $imageURL . '" alt="Contact Image" style="width:50px;height:;border-radius:100px"> ' . $person->getFirstName() . ' ' . $person->getLastName() . '</p>';
-            } else {
-                echo '<p>' . $person->getFirstName() . ' ' . $person->getLastName() . '</p>';
-            }
-            
-            // Add Edit and Delete buttons
-            echo '<button style=""><a href="../edit_contact/edit_contact.php?index=' . $key . '">Edit</a></button>';
-
-            // echo '<button style="background: #D434FE;width:;height:50px;"><a href="edit_contact.php?index=' . $key . '">Edit</a></button>';
-            echo '<button  style="background: red; color:red; border:none; margin: left 200px; "><a href="../delete_contact.php?delete=' . $personId . '" onclick="return confirm(\'Are you sure you want to delete this contact?\')">Delete</a></button>';
-            echo '</div>';
+foreach ($searchResults as $key => $person) {
+    if ($person) {
+        $imageURL = $person->getImage();
+        $personId = $person->getId();
+        echo '<div class="contact" style="display:flex; text-align: center; justify-content: center;">';
+        echo '<div>';
+        if ($imageURL) {
+            echo '<p><img src="' . $imageURL . '" alt="Contact Image" style="width:50px; height:auto; border-radius:100px;"> ' . $person->getFirstName() . ' ' . $person->getLastName() . '</p>';
+        } else {
+            echo '<p>' . $person->getFirstName() . ' ' . $person->getLastName() . '</p>';
         }
+        echo '</div>';
+        
+        // Add Edit and Delete buttons
+        echo '<div style="margin-top: 30px; margin-left: 10px; display:flex;">';
+
+        // Edit button
+        echo '<div>';
+        echo '<button style="border-radius:5px; border:none; background: white;"><a href="../edit_contact/edit_contact.php?index=' . $key . '" style="color: #903AFF; text-decoration: none;"><b>Edit</b></a></button>';
+        echo '</div>';
+
+        // Delete button
+        echo '<div style="margin-left: 10px;">';
+        echo '<button style="background: white; border:none; border-radius:5px;">';
+        echo '<a href="../delete_contact.php?delete=' . $personId . '" onclick="return confirm(\'Are you sure you want to delete this contact?\')" style="color: red; text-decoration: none;"><b>Delete<b/></a>';
+        echo '</button>';
+        echo '</div>';
+
+        echo '</div>';
+        echo '</div>';
     }
-    ?>
+}
+?>
+
 
 </body>
 

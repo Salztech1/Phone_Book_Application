@@ -83,6 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newCompany = $_POST['editCompany'];
     $newImage = $_FILES['editImage']['name']; // Use $_FILES for file uploads
 
+  // Server-side phone number validation
+    if (!preg_match('/^[0-9+\(\)#\.\s\/ext-]+$/', $newNumber)) {
+        echo "<script>alert('Invalid phone number. Please enter only numbers and allowed characters.'); window.location.href = 'edit_contact.php?index=$editIndex';</script>";
+        exit();
+    }
+
     // Call the function to update contact information
     updateContactInfo($editIndex, $newFirstName, $newLastName, $newNumber, $newCompany, $newImage);
 
@@ -121,6 +127,42 @@ if (isset($_GET['index'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Contact</title>
+    <script>
+        // JavaScript to track form changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const initialData = {
+                firstName: form.editFirstName.value,
+                lastName: form.editLastName.value,
+                phoneNumber: form.editPhoneNumber.value,
+                company: form.editCompany.value,
+                image: form.editImage.value
+            };
+
+            const saveButton = document.querySelector('button[type="submit"]');
+
+            form.addEventListener('input', function() {
+                const currentData = {
+                    firstName: form.editFirstName.value,
+                    lastName: form.editLastName.value,
+                    phoneNumber: form.editPhoneNumber.value,
+                    company: form.editCompany.value,
+                    image: form.editImage.value
+                };
+
+                // Enable the save button only if there are changes
+                if (JSON.stringify(initialData) !== JSON.stringify(currentData)) {
+                    saveButton.disabled = false;
+                } else {
+                    saveButton.disabled = true;
+                }
+            });
+        });
+
+        function cancelEdit() {
+            window.location.href = 'view_contact_html.php';
+        }
+    </script>
 </head>
 
 <body>
@@ -133,7 +175,8 @@ if (isset($_GET['index'])) {
         <p>Company: <input type="text" name="editCompany" value="<?php echo $company; ?>"></p>
         <!-- Use input type file for image uploads -->
         <p>Change Image: <input type="file" name="editImage" class="image"></p>
-        <button type="submit">Save Changes</button>
+        <button type="submit" disabled>Save Changes</button>
+        <button type="button" onclick="cancelEdit()">Cancel</button>
     </form>
 </body>
 
