@@ -1,5 +1,5 @@
 <?php
-include 'index.php';
+include '../app.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ include 'index.php';
     <h2>My Phone Book App</h2>
     <h2 >Contacts</h2>
     <form id="searchForm" method="GET">
-        <input type="text" name="search" placeholder="Search by name" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+        <input type="text" name="search" placeholder="Search Contact..." value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
         <button type="submit">Search</button>
         <button class="add_button"><a href="../views/create_html.php">Add Contact</a></button>
     </form>
@@ -41,18 +41,19 @@ foreach ($searchResults as $key => $person) {
 
         // Edit button
         echo '<div>';
-        echo '<button style="border-radius:5px; border:none; background: white;"><a href="edit.php?index=' . $key . '" style="color: #903AFF; text-decoration: none;"><b>Edit</b></a></button>';
+        echo '<button style="border-radius:5px; border:none; background: white;"><a href="../edit.php?index=' . $key . '" style="color: #903AFF; text-decoration: none;"><b>View</b></a></button>';
         echo '</div>';
 
         // Delete button
         echo '<div style="margin-left: 10px;">';
         echo '<button style="background: white; border:none; border-radius:5px;">';
-        echo '<a href="delete.php?delete=' . $personId . '" onclick="return confirm(\'Are you sure you want to delete this contact?\')" style="color: red; text-decoration: none;"><b>Delete<b/></a>';
+        echo '<a href="../delete.php?delete=' . $personId . '" onclick="return confirm(\'Are you sure you want to delete this contact?\')" style="color: red; text-decoration: none;"><b>Delete<b/></a>';
         echo '</button>';
         echo '</div>';
 
         echo '</div>';
         echo '</div>';
+        
     }
 }
 ?>

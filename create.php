@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
         // Insert into the database
         $sql = "INSERT INTO contacts (firstname, lastname, phonenumber, company, image) VALUES ('$firstname', '$lastname', '$number', '$company', '$target_file')";
         if ($conn->query($sql) === TRUE) {
-            header("Location: ../views/index_html.php");
+            header("Location: ../views/index.php");
             exit();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
