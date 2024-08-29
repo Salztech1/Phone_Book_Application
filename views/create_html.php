@@ -1,5 +1,5 @@
 <?php
-include '../contact/add_contact.php';
+include 'create.php';
 ?>
 
 
@@ -9,7 +9,7 @@ include '../contact/add_contact.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../contact/add_contact.css">
+    <link rel="stylesheet" href="../styles/create.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@ include '../contact/add_contact.php';
         <label>Image</label>
         <input type="file" name="image" id="image" class="image" accept="image/*"><br>
         <button type="submit" name="submit">Save Contact</button><br>
-        <button><a href="../edit_contact/view_contact_html.php">
+        <button><a href="../views/index_html.php">
                 View Contact
             </a></button>
     </form>

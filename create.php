@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
         // Use JavaScript alert to show the message and redirect back to the form
         echo "<script>
                 alert('Invalid phone number. Please enter a valid phone number.');
-                window.location.href = 'add_contact_html.php'; // Replace with the actual URL of your form page
+                window.location.href = 'views/create_html.php'; // Replace with the actual URL of your form page
               </script>";
         exit();
     }
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
         // Insert into the database
         $sql = "INSERT INTO contacts (firstname, lastname, phonenumber, company, image) VALUES ('$firstname', '$lastname', '$number', '$company', '$target_file')";
         if ($conn->query($sql) === TRUE) {
-            header("Location: ../edit_contact/view_contact_html.php");
+            header("Location: ../views/index_html.php");
             exit();
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;

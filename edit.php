@@ -1,5 +1,5 @@
 <?php
-include '../view_contact.php';
+include 'index.php';
 
 // Define the function to update contact information
 function updateContactInfo($editIndex, $newFirstName, $newLastName, $newNumber, $newCompany, $newImage)
@@ -92,8 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Call the function to update contact information
     updateContactInfo($editIndex, $newFirstName, $newLastName, $newNumber, $newCompany, $newImage);
 
-    // Redirect to view_contact.php to see the updated contact details
-    header("Location: view_contact_html.php");
+    // Redirect to index_html.php to see the updated contact details
+    header("Location: index_html.php");
     exit;
 }
 
@@ -160,7 +160,7 @@ if (isset($_GET['index'])) {
         });
 
         function cancelEdit() {
-            window.location.href = 'view_contact_html.php';
+            window.location.href = 'index_html.php';
         }
     </script>
 </head>

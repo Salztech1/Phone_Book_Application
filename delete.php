@@ -17,8 +17,8 @@ if (isset($_GET['delete'])) {
 
             // Check if the deletion was successful
             if ($response) {
-                // Redirect to view_contact_html.php
-                header("Location: edit_contact/view_contact_html.php");
+                // Redirect to index_html.php
+                header("Location: views/index_html.php");
                 exit;
             } else {
                 echo "Error: Unable to delete contact.";
