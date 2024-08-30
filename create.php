@@ -1,8 +1,10 @@
 <?php
 
+require_once 'ContactManager.php';
+require_once 'imageUpload.php';
+
 session_start();
-include '../classes/person.class.php';
-include '../dbh-inc.php';
+require_once '../classes/person.class.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['phoneNumber']) && isset($_POST['company']) && isset($_FILES['image'])) {
 
@@ -16,52 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['firstName']) && isset
         // Use JavaScript alert to show the message and redirect back to the form
         echo "<script>
                 alert('Invalid phone number. Please enter a valid phone number.');
-                window.location.href = 'views/create_html.php'; // Replace with the actual URL of your form page
+                window.location.href = '../views/create_html.php'; // Replace with the actual URL of your form page
               </script>";
         exit();
     }
 
-    // Set the target directory and file path
-    $target_dir = "../Images/";
-    $target_file = $target_dir . basename($_FILES["image"]["name"]);
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-    // Check if image file is a valid image
-    $check = getimagesize($_FILES["image"]["tmp_name"]);
-    if ($check === false) {
-        echo "File is not an image.";
-        exit();
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image = imageUpload();
     }
 
-    // Debugging: Check if directory exists and is writable
-    // if (!is_dir($target_dir)) {
-    //     echo "Directory does not exist: $target_dir<br>";
-    //     exit();
-    // }
-
-    // if (!is_writable($target_dir)) {
-    //     echo "Directory is not writable: $target_dir<br>";
-    //     exit();
-    // }
-
-    //echo "Attempting to move file to: $target_file<br>";
-
-    // Try to move the uploaded file
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-        echo "File uploaded successfully to $target_file<br>";
-
-        // Insert into the database
-        $sql = "INSERT INTO contacts (firstname, lastname, phonenumber, company, image) VALUES ('$firstname', '$lastname', '$number', '$company', '$target_file')";
-        if ($conn->query($sql) === TRUE) {
-            header("Location: ../views/index.php");
-            exit();
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    } else {
-        echo "Sorry, there was an error uploading your file. Error details: " . print_r(error_get_last(), true) . "<br>";
-    }
-
-    // Close the database connection
-    $conn->close();
+    $contactManager = new ContactManager();
+    $contactManager->createContact($firstname, $lastname, $number, $company, $image);
 }

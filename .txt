@@ -1,6 +1,7 @@
 <?php
 include './app.php';
 
+/*
 // Define the function to update contact information
 function updateContactInfo($editIndex, $newFirstName, $newLastName, $newNumber, $newCompany, $newImage)
 {
@@ -71,7 +72,7 @@ function updateContactInfo($editIndex, $newFirstName, $newLastName, $newNumber, 
             }
         }
     }
-}
+} */
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Process form submission and update contact information
@@ -83,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newCompany = $_POST['editCompany'];
     $newImage = $_FILES['editImage']['name']; // Use $_FILES for file uploads
 
-  // Server-side phone number validation
+    // Server-side phone number validation
     if (!preg_match('/^[0-9+\(\)#\.\s\/ext-]+$/', $newNumber)) {
         echo "<script>alert('Invalid phone number. Please enter only numbers and allowed characters.'); window.location.href = 'edit_contact.php?index=$editIndex';</script>";
         exit();
@@ -163,14 +164,13 @@ if (isset($_GET['index'])) {
         function cancelEdit() {
             window.location.href = '../Phone-Book-App/views/index.php';
         }
-        
     </script>
 </head>
 
 <body>
     <h2>Edit Contact</h2>
     <form method="POST" action="" enctype="multipart/form-data">
-        <img  src="" alt="Contact Image" style="width:50px; height:auto; border-radius:100px;"> 
+        <img src="<?php echo $image; ?>" alt="Contact Image" style="width:50px; height:auto; border-radius:100px;">
         <input type="hidden" name="editIndex" value="<?php echo $index; ?>">
         <p>First Name: <input type="text" name="editFirstName" value="<?php echo $firstName; ?>"></p>
         <p>Last Name: <input type="text" name="editLastName" value="<?php echo $lastName; ?>"></p>
@@ -178,7 +178,7 @@ if (isset($_GET['index'])) {
         <p>Company: <input type="text" name="editCompany" value="<?php echo $company; ?>"></p>
         <!-- Use input type file for image uploads -->
         <p>Change Image: <input type="file" name="editImage" class="image"></p>
-        <button type="submit" disabled>Save Changes</button>
+        <button type="submit" disabled style="margin-left:60px">Save Changes</button>
         <button type="button" onclick="cancelEdit()">Cancel</button>
     </form>
 </body>

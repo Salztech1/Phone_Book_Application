@@ -41,7 +41,7 @@ foreach ($searchResults as $key => $person) {
 
         // Edit button
         echo '<div>';
-        echo '<button style="border-radius:5px; border:none; background: white;"><a href="../edit.php?index=' . $key . '" style="color: #903AFF; text-decoration: none;"><b>View</b></a></button>';
+        echo '<button style="border-radius:5px; border:none; background: white;"><a href="../edit.php?index=' . $personId . '" style="color: #903AFF; text-decoration: none;"><b>View</b></a></button>';
         echo '</div>';
 
         // Delete button
