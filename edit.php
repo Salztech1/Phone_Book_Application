@@ -1,4 +1,5 @@
 <?php 
+
     require_once 'ContactManager.php';
     require_once 'imageUpload.php';
 
@@ -14,7 +15,7 @@
             $lastname = $_POST['lastName'];
             $phonenumber = $_POST['phoneNumber'];
             $company = $_POST['company'];
-            $image = '';
+            
 
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                 $image = imageUpload();
@@ -34,10 +35,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../Phone-Book-App/styles/create.css">
     <title>Edit Contact</title>
+
+    
+
 </head>
 <body>
 <h2>Edit Contact</h2>
     <form action="edit.php?index=<?php echo $index;?>" method="POST" enctype="multipart/form-data">
+    
+   
+    <?php
+
+if ($contact) {
+    $imageURL = isset($contact['images']) ? $contact['images'] : ''; // Correct key is used here
+    $personId = $contact['id'];
+    echo '<div class="contact" style="display:flex; text-align: center; justify-content: center;">';
+    echo '<div>';
+    if (!empty($imageURL)) {
+        echo '<p><img src="' . htmlspecialchars($imageURL) . '" alt="Contact Image" style="width:50px; height:auto; border-radius:100px;"></p>';
+    } else {
+        echo '<p>No image available</p>'; // This will only show if the image URL is empty
+    }
+    echo '</div>';
+    echo '</div>';
+}
+
+?>
+
+    
+
+
 
         <label  >First Name:</label>
         <input type="text" required name="firstName" placeholder="First Name" value="<?php echo htmlspecialchars($contact['firstname']);?>"><br>
