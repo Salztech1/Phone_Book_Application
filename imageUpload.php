@@ -2,7 +2,7 @@
     function imageUpload() { 
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $targetDir = "../Images/"; // Directory to store images
+            $targetDir = "../images/"; // Directory to store images
             $targetFile = $targetDir . basename($_FILES["image"]["name"]);
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
